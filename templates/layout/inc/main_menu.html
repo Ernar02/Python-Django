@@ -10,20 +10,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'mainapp:index' %}">Главная
+
+                {% for item in menu_links %}
+                    {% if item.active == item.href %}
+                        <li class="nav-item active">
+                    {% else %}
+                        <li class="nav-item">
+                    {% endif %}
+                            <a class="nav-link"
+                               href="{% url item.href %}">{{ item.name|safe }}</a>
+
+                    {% if item.current == item.href %}
                         <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'mainapp:products' %}">Продукты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'mainapp:about' %}">О&nbsp;нас</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'mainapp:contacts' %}">Контакты</a>
-                </li>
+                    {% endif %}
+                        </li>
+                {% endfor %}
             </ul>
         </div>
     </div>
