@@ -1,7 +1,6 @@
-from django.shortcuts import render
-from django.template.defaultfilters import title
+from django.shortcuts import render, get_object_or_404
 
-from mainapp.models import Product
+from mainapp.models import Product, Category
 
 
 def get_menu_links(current='mainapp:index'):
@@ -11,7 +10,6 @@ def get_menu_links(current='mainapp:index'):
         {'href': 'mainapp:about', 'name': 'О&nbsp;нас', 'active': current},
         {'href': 'mainapp:contacts', 'name': 'Контакты', 'active': current},
     ]
-
 
 def index(request):
     title = 'главная'
@@ -27,15 +25,24 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def products(request):
+def products(request, pk=None):
     title = 'товары'
 
-    products_all = Product.objects.all()  # [:2]
+    if pk:
+        category = get_object_or_404(Category, pk=pk)
+        products_all = Product.objects.filter(category__pk=pk)
+    else:
+        products_all = Product.objects.all()  # [:2]
+        category = {'name': 'все'}
+
+    categories = Category.objects.all()
 
     context = {
         'title': title,
         'products': products_all,
         'menu_links': get_menu_links('mainapp:products'),
+        'categories': categories,
+        'category': category,
     }
     return render(request, 'products.html', context)
 

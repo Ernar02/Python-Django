@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tooplate-main.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 
     {% block css %}{% endblock %}
 </head>
@@ -33,12 +34,14 @@
             <div class="col-md-12">
                 {# Комментарии #}
                 {% if user.is_active %}
-                    <span>{{ user.username|title }}</span> |
-                    <span><a href="{% url 'auth:logout' %}">Выйти</a></span>
+                    <span>
+                        <a href="{% url 'auth:edit' %}" class="text-light">{{ user.username|title }}</a>
+                     | </span>
+                    <span><a href="{% url 'auth:logout' %}" class="text-light">Выйти</a></span>
                 {% else %}
-                    <span>Гость</span> |
-                    <span><a href="{% url 'auth:login' %}">Войти</a></span> |
-                    <span><a href="{% url 'auth:register' %}">Регистрация</a></span>
+                    <span>Гость | </span>
+                    <span><a href="{% url 'auth:login' %}" class="text-light">Войти</a> | </span>
+                    <span><a href="{% url 'auth:register' %}" class="text-light">Регистрация</a></span>
                 {% endif %}
             </div>
         </div>
