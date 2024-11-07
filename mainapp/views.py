@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
+from basketapp.models import Basket
 from mainapp.models import Product, Category
 
 
@@ -14,14 +15,10 @@ def get_menu_links(current='mainapp:index'):
 def index(request):
     title = 'главная'
 
-    featured_products = Product.objects.all()
-
     context = {
         'title': title,
-        'featured_products': featured_products,
         'menu_links': get_menu_links(),
     }
-
     return render(request, 'index.html', context)
 
 
@@ -52,11 +49,16 @@ def product(request, pk):
     prod = Product.objects.get(pk=pk)
     same_products = Product.objects.exclude(pk=pk)
 
+    basket = []
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
+
     context = {
         'title': title,
         'product': prod,
         'same_products': same_products,
         'menu_links': get_menu_links('mainapp:products'),
+        'basket': basket,
     }
     return render(request, 'product.html', context)
 

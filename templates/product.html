@@ -40,12 +40,13 @@
                         <h6>${{ product.price }}</h6>
                         <p>{{ product.description }}</p>
                         <span>В наличии {{ product.quantity }} шт.</span>
-                        <form action="" method="get">
-                            <input type="submit" class="button" value="Купить">
-                        </form>
+                        <p><a href="{% url 'basket:add' product.pk %}" class="btn btn-primary text-light">
+                                Купить</a></p>
                         <div class="down-content">
                             <div class="categories">
-                                <h6>Категория: <span><a href="#">{{ product.category.name }}</a></span></h6>
+                                <h6>Категория: <span>
+                                    <a href="{% url 'mainapp:category' product.category.pk %}">
+                                        {{ product.category.name }}</a></span></h6>
                             </div>
                         </div>
                     </div>

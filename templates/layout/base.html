@@ -31,16 +31,24 @@
 <div id="pre-header">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 blue-menu text-light">
                 {# Комментарии #}
                 {% if user.is_active %}
                     <span>
                         <a href="{% url 'auth:edit' %}" class="text-light">{{ user.username|title }}</a>
-                     | </span>
+                    </span> | 
                     <span><a href="{% url 'auth:logout' %}" class="text-light">Выйти</a></span>
+                    
+                    
+                    {% if basket %}
+                        <a href="{% url 'basket:view' %}" class="text-light basket">
+                            <span>{{ basket|length }}</span></a>
+                    {% endif %}
+                    
+                    
                 {% else %}
-                    <span>Гость | </span>
-                    <span><a href="{% url 'auth:login' %}" class="text-light">Войти</a> | </span>
+                    <span>Гость</span> | 
+                    <span><a href="{% url 'auth:login' %}" class="text-light">Войти</a></span> | 
                     <span><a href="{% url 'auth:register' %}" class="text-light">Регистрация</a></span>
                 {% endif %}
             </div>

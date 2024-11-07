@@ -3,7 +3,7 @@
         <button class="btn btn-primary{% if not category.pk %} active{% endif %}" >
             <a href="{% url 'mainapp:products' %}">Все</a>
         </button>
-
+        
         {% for cat in categories %}
             <button class="btn btn-primary{% if category.pk == cat.pk %}active{% endif %}">
                 <a href="{% url 'mainapp:category' cat.pk %}">{{ cat.name }}</a>
