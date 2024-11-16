@@ -16,9 +16,9 @@
                     <h1>{{ title|title }}</h1>
                 </div>
             </div>
-
+            
             {% include 'layout/inc/category_menu.html' %}
-
+            
         </div>
     </div>
 </div>
@@ -26,7 +26,7 @@
 <div class="featured container no-gutter">
 
     <div class="row posts">
-
+        
         {% for product in products %}
             <div id="{{ product.pk }}" class="item new col-md-4">
                 <a href="{% url 'mainapp:product' product.pk %}">
@@ -40,8 +40,8 @@
                 </a>
             </div>
         {% endfor %}
-
-
+        
+        
     </div>
 </div>
 

@@ -1,0 +1,32 @@
+<div class="container basket_list mt-5">
+    <div class="row basket_list">
+        <table class="table mt-5">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Товар</th>
+                <th scope="col">Количество</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in basket %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ item.product }}</td>
+                    <td>
+                        <input name="{{ item.id }}" type="number"
+                               class="form-control"
+                               value="{{ item.quantity }}" min="0">
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if basket %}
+            <div class="basket_summary mb-3">
+                В корзине {{ basket.0.total_quantity }} товаров стоимостью
+                ${{ basket.0.total_cost }}
+            </div>
+        {% endif %}
+    </div>
+</div>

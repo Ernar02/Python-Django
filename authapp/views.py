@@ -1,5 +1,3 @@
-from lib2to3.fixes.fix_input import context
-
 from django.urls import reverse
 from django.contrib import auth
 from django.http import HttpResponseRedirect
@@ -12,6 +10,8 @@ from mainapp.views import get_menu_links
 def login(request):
     title = 'Вход'
 
+    _next = request.GET['next'] if 'next' in request.GET.keys() else ''
+
     if request.method == 'POST':
         login_form = ShopUserLoginForm(data=request.POST)
 
@@ -23,6 +23,10 @@ def login(request):
 
             if user and user.is_active:
                 auth.login(request, user)
+
+                if 'next' in request.POST.keys():
+                    return HttpResponseRedirect(request.POST['next'])
+
                 return HttpResponseRedirect(reverse('mainapp:index'))
     else:
         login_form = ShopUserLoginForm()
@@ -31,6 +35,7 @@ def login(request):
         'title': title,
         'login_form': login_form,
         'menu_links': get_menu_links(),
+        'next': _next,
     }
 
     return render(request, 'authapp/login.html', context)

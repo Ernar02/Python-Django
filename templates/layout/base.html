@@ -42,7 +42,7 @@
                     
                     {% if basket %}
                         <a href="{% url 'basket:view' %}" class="text-light basket">
-                            <span>{{ basket|length }}</span></a>
+                            <span>{{ basket.0.total_quantity }}</span></a>
                     {% endif %}
                     
                     
