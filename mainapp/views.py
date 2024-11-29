@@ -75,7 +75,7 @@ def product(request, pk):
 
 
 def about(request):
-    title = 'о нас'
+    title = 'О нас'
     context = {
         'title': title,
         'menu_links': get_menu_links('mainapp:about'),
