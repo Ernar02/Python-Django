@@ -1,0 +1,43 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'assets/css/flex-slider.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Page Content -->
+    <!-- Product Update Page Starts Here -->
+    <div class="contact-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <div class="line-dec"></div>
+                        <h1>{{ title }}</h1>
+                        <div class="container col-md-4 align-content-start m-0">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-primary" style="margin-top: 25px">Обновить Продукт</button>
+                            </form>
+                            {% if form.is_valid %}
+                                <div class="alert alert-success mt-3">
+                                    Продукт успешно обновлен!
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Product Update Page Ends Here -->
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'assets/js/isotope.js' %}"></script>
+    <script src="{% static 'assets/js/flex-slider.js' %}"></script>
+{% endblock %}

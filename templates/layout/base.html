@@ -37,18 +37,21 @@
                     <span>
                         <a href="{% url 'auth:edit' %}" class="text-light">{{ user.username|title }}</a>
                     </span> | 
+                    <span>
+                        <a href="{% url 'admin_staff:users' %}" class="text-light">Админка</a>
+                    </span> |
                     <span><a href="{% url 'auth:logout' %}" class="text-light">Выйти</a></span>
-                    
-                    
+
+
                     {% if basket %}
                         <a href="{% url 'basket:view' %}" class="text-light basket">
                             <span>{{ basket.0.total_quantity }}</span></a>
                     {% endif %}
-                    
-                    
+
+
                 {% else %}
-                    <span>Гость</span> | 
-                    <span><a href="{% url 'auth:login' %}" class="text-light">Войти</a></span> | 
+                    <span>Гость</span>  |
+                    <span><a href="{% url 'auth:login' %}" class="text-light">Войти</a></span> |
                     <span><a href="{% url 'auth:register' %}" class="text-light">Регистрация</a></span>
                 {% endif %}
             </div>
@@ -70,7 +73,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="copyright-text">
-                    <p>Copyright &copy; {% now "Y" %} &mdash; Bober Inc.</p>
+                    <p>Copyright &copy; {% now "Y" %} &mdash; Not Bober Inc.</p>
                 </div>
             </div>
         </div>

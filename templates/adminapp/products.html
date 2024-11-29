@@ -1,0 +1,99 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <h1 class="mt-4">Продукт
+            {% if category %}
+                :<span>{{ category.name }}</span>
+            {% endif %}
+        </h1>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa fa-table mr-1"></i>
+                <a href="{% url 'admin_staff:categories' %}">Категории</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr style="text-align: center;">
+                            <th>Изображение</th>
+                            <th>Имя</th>
+                            <th>Описание</th>
+                            <th>Количество</th>
+                            <th>Цена</th>
+                            <th>Подробнее</th>
+                            <th>Редактировать</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+<!--                        <tr>-->
+<!--                            <th>Изображение</th>-->
+<!--                            <th>Имя</th>-->
+<!--                            <th>Описание</th>-->
+<!--                            <th>Количество</th>-->
+<!--                            <th>Цена</th>-->
+<!--                            <th>Подробнее</th>-->
+<!--                            <th>Редактировать</th>-->
+<!--                            <th>Удалить</th>-->
+<!--                        </tr>-->
+                        </tfoot>
+                        <tbody>
+                            {% for object in objects %}
+                                <tr style="text-align: center;">
+                                <td><img src="/media/{{ object.image|default:'products_images/default.jpg' }}"
+                                  alt="{{ object.name }}" style="width:50px;">
+                                </td>
+                                <td>
+                                  {{ object.name|title }}
+                                </td>
+                                <td>
+                                  {{ object.short_desc|title }}
+                                </td>
+                                <td>{{ object.quantity }}</td>
+                                <td>${{ object.price }}</td>
+                                <td>
+                                  <button type="button" class="btn btn-primary">
+                                    <a class="text-white" href="{% url 'mainapp:product' pk=object.pk %}">
+                                      Подробнее
+                                    </a>
+                                  </button>
+                                </td>
+                                <td>
+                                  <button class="btn btn-warning">
+                                    <a class="text-dark" href="{% url 'admin_staff:product_update' object.pk %}">
+                                      Редактировать
+                                    </a>
+                                  </button>
+                                </td>
+                                <td>
+                                    <form method="POST" action="{% url 'admin_staff:product_delete' object.pk %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                      Удалить
+                                    </button>
+                                    </form>
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+            <div class="card-footer" style="height: 80px;">
+                <button class="btn btn-success" style="margin-top: 10px;margin-left: 88%;">
+                  <a class="text-white" href="{% url 'admin_staff:product_create' category.pk %}" style="color:#fff;">
+                    Новый продукт
+                  </a>
+                </button>
+            </div>
+
+
+{% endblock %}

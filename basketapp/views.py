@@ -59,4 +59,6 @@ def basket_edit(request, pk, quantity):
 
 @login_required
 def basket_remove(request, pk):
-    return render(request, 'basketapp/basket.html')
+    basket = get_object_or_404(Basket, pk=pk, user=request.user)
+    basket.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

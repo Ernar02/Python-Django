@@ -1,5 +1,6 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load shop_tags %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'assets/css/flex-slider.css' %}">
@@ -20,17 +21,12 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="product-slider">
+                    <div class="product-slider" style="text-align: center;">
                         <div id="slider" class="flexslider">
-                            {% if product.image %}
-                                <img src="{{ product.image.url }}"
-                                     class="img-fluid"
-                                     alt="{{ product.name }}"
-                                     title="{{ product.name }}">
-                            {% else %}
-                                <img src="{% static 'assets/images/no-image-found.png' %}"
-                                     alt="нет картинки" class="img-fluid">
-                            {% endif %}
+                            <img src="{{ product.image|has_img }}"
+                                 class="img-fluid"
+                                 alt="{{ product.name }}"
+                                 title="{{ product.name }}">
                         </div>
                     </div>
                 </div>
@@ -73,15 +69,10 @@
                         {% for product in same_products %}
                             <a href="{% url 'mainapp:product' product.pk %}">
                                 <div class="featured-item">
-                                    {% if product.image %}
-                                        <img src="{{ product.image.url }}"
-                                             class="img-fluid"
-                                             alt="{{ product.name }}"
-                                             title="{{ product.name }}">
-                                    {% else %}
-                                        <img src="{% static 'assets/images/no-image-found.png' %}"
-                                             alt="нет картинки" class="img-fluid">
-                                    {% endif %}
+                                    <img src="{{ product.image|has_img }}"
+                                         class="img-fluid"
+                                         alt="{{ product.name }}"
+                                         title="{{ product.name }}">
                                     <h4>{{ product.name }}</h4>
                                     <h6>${{ product.price }}</h6>
                                 </div>

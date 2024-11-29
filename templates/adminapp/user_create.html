@@ -1,4 +1,4 @@
-    {% extends 'layout/base.html' %}
+{% extends 'adminapp/base.html' %}
 {% load static %}
 
 {% block title %}{{ title }}{% endblock %}
@@ -17,14 +17,11 @@
             <div class="section-heading">
               <div class="line-dec"></div>
               <h1>{{ title }}</h1>
-              <div class="container">
+              <div class="container col-md-4 align-content-start m-0">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ edit_form }}
-                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Сохранить</button>
-                    <button class="btn btn-round" style="margin-top: 15px;" type="button">
-                        <a href="{% url 'mainapp:index' %}">на главную</a>
-                    </button>
+                    {{ form }}
+                    <button type="submit" class="btn btn-primary" style="margin-top: 25px;">Создать</button>
                 </form>
               </div>
             </div>

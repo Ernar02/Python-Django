@@ -1,0 +1,59 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Категории</h1>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa fa-table mr-1"></i>
+                Категории
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr >
+                            <th>Имя</th>
+                            <th>Редактировать</th>
+                            <th>Удалить</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+<!--                        <tr>-->
+<!--                            <th>Имя</th>-->
+<!--                            <th>Редактировать</th>-->
+<!--                            <th>Удалить</th>-->
+<!--                        </tr>-->
+                        </tfoot>
+                        <tbody>
+                        {% for category in objects %}
+                            <tr>
+                                <td><a href="{% url 'admin_staff:product_read' category.pk %}" style="color: dodgerblue">{{ category.name }}</a></td>
+                                <td style="width: 500px;text-align: center;">
+                                    <a href="{% url 'admin_staff:category_update' category.pk %}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;">
+                                  <form method="post" action="{% url 'admin_staff:category_delete' pk=category.id %}" onsubmit="return confirm('Вы уверены, что хотите удалить категорию {{ category.name }}?');">
+                                          {% csrf_token %}
+                                         <button type="submit" class="btn btn-outline-danger">
+                                               <i class="fa fa-times-circle"></i>
+                                         </button>
+                                      </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer" style="height: 80px;">
+                    <button class="btn btn-success" style="margin-top: 10px;margin-left: 88%;"><a href="{% url 'adminapp:category_create' %}" style="color:#fff;">Создать Категорию </a></button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

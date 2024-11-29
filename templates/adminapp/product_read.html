@@ -1,0 +1,52 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="mt-4">Все Продукты</h1>
+
+        {% for category in categories %}
+            <h3>{{ category.name }}</h3>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th>Изображение</th>
+                                <th>Имя</th>
+                                <th>Описание</th>
+                                <th>Количество</th>
+                                <th>Цена</th>
+                                <th>Подробнее</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                                {% if product.category == category %}
+                                    <tr style="text-align: center;">
+                                        <td><img src="/media/{{ product.image|default:'products_images/default.jpg' }}" alt="{{ product.name }}" style="width:50px;"></td>
+                                        <td>{{ product.name }}</td>
+                                        <td>{{ product.short_desc }}</td>
+                                        <td>{{ product.quantity }}</td>
+                                        <td>${{ product.price }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">
+                                            <a class="text-white" href="{% url 'adminapp:product_read' category.pk %}">
+                                                Подробнее
+                                            </a>
+
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+

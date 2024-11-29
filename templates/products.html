@@ -1,5 +1,6 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load shop_tags %}
 
 {% block title %}{{ title|title }}{% endblock %}
 
@@ -16,9 +17,9 @@
                     <h1>{{ title|title }}</h1>
                 </div>
             </div>
-            
+
             {% include 'layout/inc/category_menu.html' %}
-            
+
         </div>
     </div>
 </div>
@@ -26,39 +27,58 @@
 <div class="featured container no-gutter">
 
     <div class="row posts">
-        
+
         {% for product in products %}
             <div id="{{ product.pk }}" class="item new col-md-4">
                 <a href="{% url 'mainapp:product' product.pk %}">
                     <div class="featured-item">
-                        {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                        {% endif %}
+{#                        {% if product.image %}#}
+{#                            <img src="{{ product.image.url }}" alt="{{ product.name }}">#}
+                            <img src="{{ product.image|has_img }}" alt="{{ product.name }}">
+{#                        {% endif %}#}
                         <h4>{{ product.name }}</h4>
                         <h6>${{ product.price }}</h6>
                     </div>
                 </a>
             </div>
         {% endfor %}
-        
-        
+
+
     </div>
 </div>
 
+{% if products.paginator and products.paginator.num_pages > 1 %}
 <div class="page-navigation">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <ul>
-                    <li class="current-page"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                    {% if products.has_previous %}
+                        {% if category.pk %}
+                            <li><a href="{% url 'mainapp:page' category.pk products.previous_page_number %}"><i class="fa fa-angle-left"></i></a></li>
+                        {% else %}
+                            <li><a href="{% url 'mainapp:page' 0 products.previous_page_number %}"><i class="fa fa-angle-left"></i></a></li>
+                        {% endif %}
+                    {% endif %}
+
+                    {% for page in products.paginator.page_range %}
+                        {% if page == products.number %}
+                            <li class="current-page"><a href="{% url 'mainapp:page' category.pk|default:0 page %}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'mainapp:page' category.pk|default:0 page %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                        <li>
+                            <a href="{% url 'mainapp:page' category.pk|default:0 products.next_page_number %}"><i class="fa fa-angle-right"></i></a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </div>
 </div>
+{% endif %}
 <!-- Featred Page Ends Here -->
 {% endblock %}
 
